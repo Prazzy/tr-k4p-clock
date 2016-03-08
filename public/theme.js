@@ -2,37 +2,42 @@
 // must be AMD modules (RequireJS)
 define(function(require) {
 
+	const chrome = require('ui/chrome');
+
 	// Include our custom CSS (LESS also works)
-	require('plugins/tr-k4p-clock/clock.css');
+	require('plugins/popular-theme/theme.css');
+	require('plugins/popular-theme/pana-theme.less');
+	require('plugins/popular-theme/pana-theme');
+	require('jquery');
 
 	// Create an Angular module for this plugin
-	var module = require('ui/modules').get('tr-k4p-clock');
+	var module = require('ui/modules').get('popular-theme');
 	// Add a controller to this module
-	module.controller('ClockController', function($scope, $timeout) {
+	module.controller('ThemeController', function($scope, $timeout) {
 
 		var setTime = function() {
 			$scope.time = Date.now();
-			$timeout(setTime, 1000);
+			//$timeout(setTime, 1000);
 		};
 		setTime();
 
 	});
 
 	// The provider function must return the visualization
-	function ClockProvider(Private) {
+	function ThemeProvider(Private) {
 		// Load TemplateVisType
 		var TemplateVisType = Private(require('ui/template_vis_type/TemplateVisType'));
 
 		// Return a new instance describing this visualization
 		return new TemplateVisType({
-			name: 'trClock', // the internal id of the visualization
-			title: 'Clock', // the name shown in the visualize list
-			icon: 'fa-clock-o', // the class of the font awesome icon for this
-			description: 'Add a digital clock to your dashboards.', // description shown to the user
+			name: 'popular-theme', // the internal id of the visualization
+			title: 'POPULAR Theme', // the name shown in the visualize list
+			icon: 'fa-film', // the class of the font awesome icon for this
+			description: 'POPULAR Theme.', // description shown to the user
 			requiresSearch: false, // Cannot be linked to a search
-			template: require('plugins/tr-k4p-clock/clock.html'), // Load the template of the visualization
+			template: require('plugins/popular-theme/theme.html'), // Load the template of the visualization
 			params: {
-				editor: require('plugins/tr-k4p-clock/clock-editor.html'), // Use this HTML as an options editor for this vis
+				editor: require('plugins/popular-theme/theme-editor.html'), // Use this HTML as an options editor for this vis
 				defaults: { // Set default values for paramters (that can be configured in the editor)
 					format: 'HH:mm:ss'
 				}
@@ -41,11 +46,11 @@ define(function(require) {
 	}
 
 	// Register the above provider to the visualization registry
-	require('ui/registry/vis_types').register(ClockProvider);
+	require('ui/registry/vis_types').register(ThemeProvider);
 
 	// Return the provider, so you potentially load it with RequireJS.
 	// This isn't mandatory, but since all Kibana plugins do this, you might
 	// want to also return the provider.
-	return ClockProvider;
+	return ThemeProvider;
 
 });
